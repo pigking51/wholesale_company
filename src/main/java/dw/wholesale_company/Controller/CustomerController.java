@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// @RequestMapping : 이거쓰면 맨 위에 주소적어두고 아래에 일일히 적어두지 않아도 됨(prefix)
 @RestController
 public class CustomerController {
 
@@ -30,4 +31,8 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomersIfMoreAvgMileage(),
         HttpStatus.OK);
     }
+
+
+
+
 }
