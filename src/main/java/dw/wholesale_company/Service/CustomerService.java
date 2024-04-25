@@ -1,13 +1,18 @@
 package dw.wholesale_company.Service;
 
 import dw.wholesale_company.Model.Customer;
+import dw.wholesale_company.Model.Mileage;
 import dw.wholesale_company.Model.Order;
 import dw.wholesale_company.Repository.CustomerRepository;
+import dw.wholesale_company.Repository.MileageRepository;
 import dw.wholesale_company.Repository.OrderRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +23,9 @@ public class CustomerService {
     CustomerRepository customerRepository;
 
     OrderRepository orderRepository;
+
+    @Autowired
+    MileageRepository mileageRepository;
 
     public CustomerService(CustomerRepository customerRepository, OrderRepository orderRepository) {
         this.customerRepository = customerRepository;
@@ -59,6 +67,41 @@ public class CustomerService {
         Double avg = (double)sum / (double)customers.size();
         return customers.stream().filter(a -> a.getMileage() > avg)
                 .collect(Collectors.toList());
+    }
+
+    public List<Customer> getCustomerByMileageWithGrade(String grade){
+        List<Customer> customer = customerRepository.findAll();
+        List<Mileage> mileages = mileageRepository.findAll();
+
+//
+//        for(int i = 0; i< customer.size(); i++){
+//            if(customer.get(i).getMileage() > mileage.get(0).getLowLimit()
+//                && customer.get(i).getMileage() < mileage.get(0).getHighLimit()){
+//                A.add(customer.get(i));
+//            } else if (customer.get(i).getMileage() > mileage.get(1).getLowLimit()
+//                    && customer.get(i).getMileage() < mileage.get(1).getHighLimit()) {
+//                B.add(customer.get(i));
+//            } else if (customer.get(i).getMileage() > mileage.get(2).getLowLimit()
+//                    && customer.get(i).getMileage() < mileage.get(2).getHighLimit()) {
+//                C.add(customer.get(i));;
+//            } else if (customer.get(i).getMileage() > mileage.get(3).getLowLimit()
+//                    && customer.get(i).getMileage() < mileage.get(3).getHighLimit()) {
+//                D.add(customer.get(i));
+//            } else {
+//                S.add(customer.get(i));
+//            }
+//
+//        }
+//
+//        return A.size();
+
+        List<Customer> newCustomer = customer.stream().filter(a -> a.getMileage() > mileages.get(i).getLowLimit()
+                                && a.getMileage() < mileages.get(i).getHighLimit() < mileages.get(mileages.contains(grade)))
+                                .
+
+
+
+
     }
 
 

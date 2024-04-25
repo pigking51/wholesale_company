@@ -1,5 +1,6 @@
 package dw.wholesale_company.Controller;
 
+import dw.wholesale_company.Model.Customer;
 import dw.wholesale_company.Model.Mileage;
 import dw.wholesale_company.Service.MileageService;
 import org.springframework.http.HttpStatus;
@@ -23,4 +24,6 @@ public class MileageController {
         return new ResponseEntity<>(mileageService.getAllMileages(),
                 HttpStatus.OK);
     }
+
+
 }

@@ -5,6 +5,7 @@ import dw.wholesale_company.Service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,6 +31,12 @@ public class CustomerController {
     public ResponseEntity<List<Customer>> getCustomersIfMoreAvgMileage(){
         return new ResponseEntity<>(customerService.getCustomersIfMoreAvgMileage(),
         HttpStatus.OK);
+    }
+
+    @PostMapping("/mileages/milgrade")
+    public ResponseEntity<List<Customer>> getCustomerByMileageWithGrade(String grade){
+        return new ResponseEntity<>(customerService.getCustomerByMileageWithGrade(grade),
+                HttpStatus.OK);
     }
 
 

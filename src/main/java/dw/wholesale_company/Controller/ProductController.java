@@ -88,5 +88,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.getProductByTop10Price(),
                 HttpStatus.OK);
     }
+
+    @PostMapping("/products/producttop10")
+    public ResponseEntity<List<Product>> getProductByTopLimitPrice(@RequestBody int limit){
+        return new ResponseEntity<>(productService.getProductByTopLimitPrice(limit),
+                HttpStatus.OK);
+    }
 }
 
