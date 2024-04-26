@@ -1,5 +1,6 @@
 package dw.wholesale_company.Service;
 
+import dw.wholesale_company.Exception.ResourceNotFoundException;
 import dw.wholesale_company.Model.Customer;
 import dw.wholesale_company.Model.Mileage;
 import dw.wholesale_company.Model.Order;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,9 +71,9 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public List<Customer> getCustomerByMileageWithGrade(String grade){
-        List<Customer> customer = customerRepository.findAll();
-        List<Mileage> mileages = mileageRepository.findAll();
+//    public List<Customer> getCustomerByMileageWithGrade(String grade){
+//        List<Customer> customer = customerRepository.findAll();
+//        List<Mileage> mileages = mileageRepository.findAll();
 
 //
 //        for(int i = 0; i< customer.size(); i++){
@@ -95,15 +97,23 @@ public class CustomerService {
 //
 //        return A.size();
 
-        List<Customer> newCustomer = customer.stream().filter(a -> a.getMileage() > mileages.get(i).getLowLimit()
-                                && a.getMileage() < mileages.get(i).getHighLimit() < mileages.get(mileages.contains(grade)))
-                                .
-
-
-
-
+//        List<Customer> newCustomer = customer.stream().filter(a -> a.getMileage() > mileages.get(mileageRepository.).getLowLimit()
+//                                && a.getMileage() < mileages.get(i).getHighLimit() < mileages.get(mileages.contains(grade)))
+//                                .
+//
+//    }
+    // 마일리지 등급명별로 고객수를 보이시오
+    public List<Customer> getCustomerByMileageGrade(String grade){
+        Optional<Mileage> mileageOptional = mileageRepository.findById(grade);
+        if(mileageOptional.isEmpty()){
+            throw new ResourceNotFoundException("Mileage", "Grade", grade);
+        }
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream().filter(c ->
+                c.getMileage() >= mileageOptional.get().getLowLimit()
+                && c.getMileage() <= mileageOptional.get().getHighLimit())
+                .collect(Collectors.toList());
     }
-
 
 
 
